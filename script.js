@@ -1,4 +1,5 @@
 let color = "black";
+let click = true;
 
 /* Create a webpage with a 16x16 grid of square divs. */
 function populateBoard(size) {
@@ -32,10 +33,12 @@ function changeSize(input) {
 
 // random color
 function colorSquare() {
-  if (color === "random") {
-    this.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
-  } else {
-    this.style.backgroundColor = color;
+  if (click) {
+    if (color === "random") {
+      this.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+    } else {
+      this.style.backgroundColor = color;
+    }
   }
 }
 
@@ -43,8 +46,21 @@ function changeColor(choice) {
   color = choice;
 }
 
+// reset board button
 function resetBoard() {
   let board = document.querySelector(".board");
   let squares = board.querySelectorAll("div");
   squares.forEach((div) => (div.style.backgroundColor = "white"));
 }
+
+// click to start draw and click to stop draw
+document.querySelector("body").addEventListener("click", (e) => {
+  if (e.target.tagName != "BUTTON") {
+    click = !click;
+    if (click) {
+      document.querySelector(".mode").textContent = "Mode: Coloring";
+    } else {
+      document.querySelector(".mode").textContent = "Mode: Not Coloring";
+    }
+  }
+});
